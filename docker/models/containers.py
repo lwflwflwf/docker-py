@@ -509,7 +509,7 @@ class ContainerCollection(Collection):
         """
         Run a container. By default, it will wait for the container to finish
         and return its logs, similar to ``docker run``.
-
+        运行一个容器。他将会等待容器完成并且返回日志，
         If the ``detach`` argument is ``True``, it will start the container
         and immediately return a :py:class:`Container` object, similar to
         ``docker run -d``.

@@ -42,34 +42,36 @@ class DockerClient(object):
     @classmethod
     def from_env(cls, **kwargs):
         """
-        Return a client configured from environment variables.
+        Return a client configured 客户端配置 from environment variables 从个环境变量.
 
         The environment variables used are the same as those used by the
         Docker command-line client. They are:
+        环境变量的使用就像是他们通过docker命令行被使用一样
 
         .. envvar:: DOCKER_HOST
 
             The URL to the Docker host.
 
-        .. envvar:: DOCKER_TLS_VERIFY
+        .. envvar:: DOCKER_TLS_VERIFY  验证
 
-            Verify the host against a CA certificate.
+            Verify the host against a CA certificate. 验证主机代理CA证书
 
         .. envvar:: DOCKER_CERT_PATH
 
             A path to a directory containing TLS certificates to use when
             connecting to the Docker host.
+            当连接docker主机的时候使用包含TLS证书的目录路径
 
         Args:
             version (str): The version of the API to use. Set to ``auto`` to
                 automatically detect the server's version. Default: ``1.35``
-            timeout (int): Default timeout for API calls, in seconds.
+            timeout (int): Default timeout for API calls, in seconds.默认API调用超时
             ssl_version (int): A valid `SSL version`_.
-            assert_hostname (bool): Verify the hostname of the server.
+            assert_hostname (bool): Verify the hostname of the server.验证主机名
             environment (dict): The environment to read environment variables
-                from. Default: the value of ``os.environ``
+                from. Default: the value of ``os.environ``默认读取的环境变量
             credstore_env (dict): Override environment variables when calling
-                the credential store process.
+                the credential store process.调用凭据存储进程时重写环境变量
 
         Example:
 
@@ -79,7 +81,7 @@ class DockerClient(object):
         .. _`SSL version`:
             https://docs.python.org/3.5/library/ssl.html#ssl.PROTOCOL_TLSv1
         """
-        timeout = kwargs.pop('timeout', DEFAULT_TIMEOUT_SECONDS)
+        timeout = kwargs.pop('timeout', DEFAULT_TIMEOUT_SECONDS)  # 默认60秒
         version = kwargs.pop('version', None)
         return cls(
             timeout=timeout, version=version, **kwargs_from_env(**kwargs)
@@ -99,6 +101,7 @@ class DockerClient(object):
         """
         An object for managing containers on the server. See the
         :doc:`containers documentation <containers>` for full details.
+        服务器上管理容器的对象
         """
         return ContainerCollection(client=self)
 
@@ -107,6 +110,7 @@ class DockerClient(object):
         """
         An object for managing images on the server. See the
         :doc:`images documentation <images>` for full details.
+        服务器上管理镜像的对象
         """
         return ImageCollection(client=self)
 
@@ -115,6 +119,7 @@ class DockerClient(object):
         """
         An object for managing networks on the server. See the
         :doc:`networks documentation <networks>` for full details.
+        服务器上管理网络的镜像
         """
         return NetworkCollection(client=self)
 
@@ -123,6 +128,7 @@ class DockerClient(object):
         """
         An object for managing nodes on the server. See the
         :doc:`nodes documentation <nodes>` for full details.
+        服务器上管理几点的对象
         """
         return NodeCollection(client=self)
 
@@ -131,6 +137,7 @@ class DockerClient(object):
         """
         An object for managing plugins on the server. See the
         :doc:`plugins documentation <plugins>` for full details.
+        服务器上管理插件的对象
         """
         return PluginCollection(client=self)
 
@@ -139,6 +146,7 @@ class DockerClient(object):
         """
         An object for managing secrets on the server. See the
         :doc:`secrets documentation <secrets>` for full details.
+        服务器上管理密钥的对象
         """
         return SecretCollection(client=self)
 
@@ -147,6 +155,7 @@ class DockerClient(object):
         """
         An object for managing services on the server. See the
         :doc:`services documentation <services>` for full details.
+        服务器上管理服务的对象
         """
         return ServiceCollection(client=self)
 
