@@ -447,7 +447,7 @@ def normalize_links(links):
 
 def parse_env_file(env_file):
     """
-    Reads a line-separated environment file.
+    Reads a line-separated environment file.  解析环境文件 每行的内容形式为key=value
     The format of each line should be "key=value".
     """
     environment = {}
@@ -480,7 +480,7 @@ def split_command(command):
     return shlex.split(command)
 
 
-def format_environment(environment):
+def format_environment(environment):  # 格式化环境信息
     def format_env(key, value):
         if value is None:
             return key

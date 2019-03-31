@@ -21,7 +21,7 @@ def check_resource(resource_name):
     return decorator
 
 
-def minimum_version(version):
+def minimum_version(version):  # 验证最小的版本
     def decorator(f):
         @functools.wraps(f)
         def wrapper(self, *args, **kwargs):

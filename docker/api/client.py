@@ -183,6 +183,7 @@ class APIClient(
             self.base_url = base_url
 
         # version detection needs to be after unix adapter mounting
+        # 版本检测需要在安装Unix适配器之后进行
         if version is None:
             self._version = DEFAULT_DOCKER_API_VERSION
         elif isinstance(version, six.string_types):

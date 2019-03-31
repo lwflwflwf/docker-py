@@ -8,7 +8,7 @@ class DaemonApiMixin(object):
     @utils.minimum_version('1.25')
     def df(self):
         """
-        Get data usage information.
+        Get data usage information.获取数据使用信息
 
         Returns:
             (dict): A dictionary representing different resource categories
@@ -100,8 +100,8 @@ class DaemonApiMixin(object):
         Authenticate with a registry. Similar to the ``docker login`` command.
 
         Args:
-            username (str): The registry username
-            password (str): The plaintext password
+            username (str): The registry username  注册的用户名
+            password (str): The plaintext password  明文密码
             email (str): The email for the registry account
             registry (str): URL to the registry.  E.g.
                 ``https://index.docker.io/v1/``
@@ -123,6 +123,12 @@ class DaemonApiMixin(object):
         # one more time in case anything showed up in there.
         # If dockercfg_path is passed check to see if the config file exists,
         # if so load that config.
+        """
+        如果到目前为止还没有任何auth数据，请尝试重新加载配置文件
+        再来一次，以防里面有什么东西。
+        如果通过dockercfg_path检查配置文件是否存在，
+        如果是，则加载该配置。
+        """
         if dockercfg_path and os.path.exists(dockercfg_path):
             self._auth_configs = auth.load_config(
                 dockercfg_path, credstore_env=self.credstore_env
@@ -154,10 +160,10 @@ class DaemonApiMixin(object):
     def ping(self):
         """
         Checks the server is responsive. An exception will be raised if it
-        isn't responding.
+        isn't responding.  检查服务是响应的  如果没有响应则会抛出异常
 
         Returns:
-            (bool) The response from the server.
+            (bool) The response from the server.布尔类型值
 
         Raises:
             :py:class:`docker.errors.APIError`
@@ -169,6 +175,7 @@ class DaemonApiMixin(object):
         """
         Returns version information from the server. Similar to the ``docker
         version`` command.
+        返回服务版本信息，类似于命令docker version
 
         Returns:
             (dict): The server version information

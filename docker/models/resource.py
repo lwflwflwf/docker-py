@@ -2,17 +2,21 @@
 class Model(object):
     """
     A base class for representing a single object on the server.
+    表示服务器上单个对象的基类。
     """
     id_attribute = 'Id'
 
     def __init__(self, attrs=None, client=None, collection=None):
         #: A client pointing at the server that this object is on.
+        # 指向此对象所在服务器的客户端。
         self.client = client
 
         #: The collection that this model is part of.
+        # 此模型所属的集合
         self.collection = collection
 
         #: The raw representation of this object from the API
+        # API中此对象的原始表示形式
         self.attrs = attrs
         if self.attrs is None:
             self.attrs = {}
@@ -36,14 +40,14 @@ class Model(object):
     @property
     def short_id(self):
         """
-        The ID of the object, truncated to 10 characters.
+        The ID of the object, truncated to 10 characters.前是个字符的ID
         """
         return self.id[:10]
 
     def reload(self):
         """
         Load this object from the server again and update ``attrs`` with the
-        new data.
+        new data.再次从服务加载对象并且更新使用新数据更新属性
         """
         new_model = self.collection.get(self.id)
         self.attrs = new_model.attrs
@@ -52,7 +56,7 @@ class Model(object):
 class Collection(object):
     """
     A base class for representing all objects of a particular type on the
-    server.
+    server.表示服务器上特定类型的所有对象的基类。
     """
 
     #: The type of object this collection represents, set by subclasses

@@ -20,11 +20,15 @@ class Container(Model):
         attributes are cached; users may call :py:meth:`reload` to
         query the Docker daemon for the current properties, causing
         :py:attr:`attrs` to be refreshed.
+        容器对象的局部表示
+        详细配置通过属性调用
+        局部属性笔记被缓存
+        查询docker守护进程以获取当前属性
     """
     @property
     def name(self):
         """
-        The name of the container.
+        The name of the container. 容器名
         """
         if self.attrs.get('Name') is not None:
             return self.attrs['Name'].lstrip('/')
@@ -32,7 +36,7 @@ class Container(Model):
     @property
     def image(self):
         """
-        The image of the container.
+        The image of the container.  容器镜像
         """
         image_id = self.attrs.get('ImageID', self.attrs['Image'])
         if image_id is None:
@@ -42,7 +46,7 @@ class Container(Model):
     @property
     def labels(self):
         """
-        The labels of a container as dictionary.
+        The labels of a container as dictionary.  容器标签 字典形式
         """
         try:
             result = self.attrs['Config'].get('Labels')
@@ -57,6 +61,7 @@ class Container(Model):
     def status(self):
         """
         The status of the container. For example, ``running``, or ``exited``.
+        容器状态
         """
         if isinstance(self.attrs['State'], dict):
             return self.attrs['State']['Status']
@@ -64,11 +69,12 @@ class Container(Model):
 
     def attach(self, **kwargs):
         """
-        Attach to this container.
+        Attach to this container. 使用attach方式进入容器
 
         :py:meth:`logs` is a wrapper around this method, which you can
         use instead if you want to fetch/stream container output without first
         retrieving the entire backlog.
+        日志是此方法的包装  如果你想fetch/stream容器
 
         Args:
             stdout (bool): Include stdout.
@@ -108,11 +114,12 @@ class Container(Model):
         """
         Commit a container to an image. Similar to the ``docker commit``
         command.
+        提交容器到镜像
 
         Args:
-            repository (str): The repository to push the image to
-            tag (str): The tag to push
-            message (str): A commit message
+            repository (str): The repository to push the image to要push镜像到的仓库
+            tag (str): The tag to push推送的tag
+            message (str): A commit message 提交信息
             author (str): The name of the author
             changes (str): Dockerfile instructions to apply while committing
             conf (dict): The configuration for the container. See the
@@ -148,14 +155,14 @@ class Container(Model):
         """
         Run a command inside this container. Similar to
         ``docker exec``.
-
+        容器内运行命令
         Args:
             cmd (str or list): Command to be executed
             stdout (bool): Attach to stdout. Default: ``True``
             stderr (bool): Attach to stderr. Default: ``True``
             stdin (bool): Attach to stdin. Default: ``False``
             tty (bool): Allocate a pseudo-TTY. Default: False
-            privileged (bool): Run as privileged.
+            privileged (bool): Run as privileged.  特许运行
             user (str): User to execute command as. Default: root
             detach (bool): If true, detach from the exec command.
                 Default: False
@@ -832,7 +839,7 @@ class ContainerCollection(Collection):
     def create(self, image, command=None, **kwargs):
         """
         Create a container without starting it. Similar to ``docker create``.
-
+        创建容器不运行
         Takes the same arguments as :py:meth:`run`, except for ``stdout``,
         ``stderr``, and ``remove``.
 
@@ -857,7 +864,7 @@ class ContainerCollection(Collection):
     def get(self, container_id):
         """
         Get a container by name or ID.
-
+        获取容器名或者ID
         Args:
             container_id (str): Container name or ID.
 
@@ -877,7 +884,7 @@ class ContainerCollection(Collection):
              sparse=False, ignore_removed=False):
         """
         List containers. Similar to the ``docker ps`` command.
-
+        列出容器
         Args:
             all (bool): Show all containers. Only running containers are shown
                 by default
@@ -890,16 +897,16 @@ class ContainerCollection(Collection):
             filters (dict): Filters to be processed on the image list.
                 Available filters:
 
-                - `exited` (int): Only containers with specified exit code
+                - `exited` (int): Only containers with specified exit code只列出指定退出码的
                 - `status` (str): One of ``restarting``, ``running``,
-                    ``paused``, ``exited``
+                    ``paused``, ``exited`` 容器状态
                 - `label` (str): format either ``"key"`` or ``"key=value"``
                 - `id` (str): The id of the container.
                 - `name` (str): The name of the container.
-                - `ancestor` (str): Filter by container ancestor. Format of
+                - `ancestor` (str): Filter by container ancestor. Format of 通过容器祖先过滤
                     ``<image-name>[:tag]``, ``<image-id>``, or
                     ``<image@digest>``.
-                - `before` (str): Only containers created before a particular
+                - `before` (str): Only containers created before a particular 在特定容器之前创建容器
                     container. Give the container name or id.
                 - `since` (str): Only containers created after a particular
                     container. Give container name or id.
@@ -945,7 +952,7 @@ class ContainerCollection(Collection):
     prune.__doc__ = APIClient.prune_containers.__doc__
 
 
-# kwargs to copy straight from run to create
+# kwargs to copy straight from run to create 从运行直接复制到创建
 RUN_CREATE_KWARGS = [
     'command',
     'detach',

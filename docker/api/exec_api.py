@@ -11,6 +11,7 @@ class ExecApiMixin(object):
                     environment=None, workdir=None, detach_keys=None):
         """
         Sets up an exec instance in a running container.
+        在运行的容器中设置exec实例
 
         Args:
             container (str): Target container where exec instance will be

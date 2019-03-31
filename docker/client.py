@@ -25,16 +25,21 @@ class DockerClient(object):
     Args:
         base_url (str): URL to the Docker server. For example,
             ``unix:///var/run/docker.sock`` or ``tcp://127.0.0.1:1234``.
+            服务docker的路由
         version (str): The version of the API to use. Set to ``auto`` to
             automatically detect the server's version. Default: ``1.35``
+            使用的API版本
         timeout (int): Default timeout for API calls, in seconds.
         tls (bool or :py:class:`~docker.tls.TLSConfig`): Enable TLS. Pass
             ``True`` to enable it with default options, or pass a
             :py:class:`~docker.tls.TLSConfig` object to use custom
             configuration.
+            有效的TLS协议
         user_agent (str): Set a custom user agent for requests to the server.
+        为请求设置一个访客的代理
         credstore_env (dict): Override environment variables when calling the
             credential store process.
+            调用凭据存储进程时重写环境变量
     """
     def __init__(self, *args, **kwargs):
         self.api = APIClient(*args, **kwargs)
@@ -93,6 +98,7 @@ class DockerClient(object):
         """
         An object for managing configs on the server. See the
         :doc:`configs documentation <configs>` for full details.
+        管理配置
         """
         return ConfigCollection(client=self)
 
@@ -164,6 +170,7 @@ class DockerClient(object):
         """
         An object for managing a swarm on the server. See the
         :doc:`swarm documentation <swarm>` for full details.
+        管理集群
         """
         return Swarm(client=self)
 
@@ -172,6 +179,7 @@ class DockerClient(object):
         """
         An object for managing volumes on the server. See the
         :doc:`volumes documentation <volumes>` for full details.
+        管理挂在卷
         """
         return VolumeCollection(client=self)
 
@@ -214,4 +222,4 @@ class DockerClient(object):
         raise AttributeError(' '.join(s))
 
 
-from_env = DockerClient.from_env
+from_env = DockerClient.from_env  # 返回的是docker client对象

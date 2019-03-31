@@ -27,6 +27,8 @@ class BuildApiMixin(object):
         containing a Dockerfile) or a remote URL. ``fileobj`` must be a
         readable file-like object to a Dockerfile.
 
+        path可以是一个本地包含Dockerfile的文件
+
         If you have a tar file for the Docker build context (including a
         Dockerfile) already, pass a readable file-like object to ``fileobj``
         and also pass ``custom_context=True``. If the stream is compressed
@@ -62,19 +64,20 @@ class BuildApiMixin(object):
             path (str): Path to the directory containing the Dockerfile
             fileobj: A file object to use as the Dockerfile. (Or a file-like
                 object)
-            tag (str): A tag to add to the final image
-            quiet (bool): Whether to return the status
+            tag (str): A tag to add to the final image 加到最终镜像的标签
+            quiet (bool): Whether to return the status  是否返回状态
             nocache (bool): Don't use the cache when set to ``True``
             rm (bool): Remove intermediate containers. The ``docker build``
                 command now defaults to ``--rm=true``, but we have kept the old
                 default of `False` to preserve backward compatibility
+                移除中间容器
             timeout (int): HTTP timeout
-            custom_context (bool): Optional if using ``fileobj``
+            custom_context (bool): Optional if using ``fileobj``  可选的
             encoding (str): The encoding for a stream. Set to ``gzip`` for
                 compressing
             pull (bool): Downloads any updates to the FROM image in Dockerfiles
             forcerm (bool): Always remove intermediate containers, even after
-                unsuccessful builds
+                unsuccessful builds  强制移除中间容器
             dockerfile (str): path within the build context to the Dockerfile
             buildargs (dict): A dictionary of build arguments
             container_limits (dict): A dictionary of limits applied to each
